@@ -1,0 +1,23 @@
+<fest:template xmlns:fest="http://fest.mail.ru">
+<div class="col-md-offset-4 col-md-4">
+<div class="panel panel-default main__panel_mtop" >
+	<div class="panel-body">
+			<h1 style="text-align: center">
+				TapSquare
+			</h1>
+		<div class="btn-group btn-group-justified" role="group" aria-label="..." style="margin-top: 6%">
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-default" id="js-scoreboard">Score board</button>
+  </div>
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-primary" id="js-start-game">Start game</button>
+  </div>
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-default" id="js-login">Log in</button>
+  </div>
+</div>
+	</div>
+</div>
+	
+</div>
+</fest:template>

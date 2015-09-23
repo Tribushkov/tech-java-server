@@ -1,0 +1,12 @@
+<fest:template xmlns:fest="http://fest.mail.ru">
+	<div class="col-md-12">
+		<div class="panel panel-default main__gamepanel_mtop">
+			<div class="panel-body">
+				<div class="main__gamescene"> this could be our game :(</div>
+			</div>
+		</div>
+	<div class="col-md-offset-1 col-md-2">
+		<button class="btn btn-success" id="js-back">Back</button>	
+	</div>	
+	</div>		
+</fest:template>
