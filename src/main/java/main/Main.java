@@ -1,5 +1,6 @@
 package main;
 
+import frontend.AdminServlet;
 import frontend.LogOutServlet;
 import frontend.SignInServlet;
 import frontend.SignUpServlet;
@@ -24,6 +25,8 @@ public class Main {
             port = Integer.valueOf(portString);
         }
 
+        Server server = new Server(port);
+
         System.out.append("Starting at port: ").append(String.valueOf(port)).append('\n');
 
         AccountService accountService = new AccountService();
@@ -31,11 +34,13 @@ public class Main {
         Servlet signin = new SignInServlet(accountService);
         Servlet signUp = new SignUpServlet(accountService);
         Servlet logOut = new LogOutServlet(accountService);
+        Servlet admin = new AdminServlet(server, accountService);
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(signin), "/signin");
         context.addServlet(new ServletHolder(signUp), "/signup");
         context.addServlet(new ServletHolder(logOut), "/logout");
+        context.addServlet(new ServletHolder(admin), "/admin");
 
         ResourceHandler resource_handler = new ResourceHandler();
         resource_handler.setDirectoriesListed(true);
@@ -44,7 +49,6 @@ public class Main {
         HandlerList handlers = new HandlerList();
         handlers.setHandlers(new Handler[]{resource_handler, context});
 
-        Server server = new Server(port);
         server.setHandler(handlers);
 
         server.start();
