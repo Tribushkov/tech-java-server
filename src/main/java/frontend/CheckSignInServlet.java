@@ -26,7 +26,7 @@ public class CheckSignInServlet extends HttpServlet {
         if (accountService.getSession(session) != null) {
             response.setStatus(HttpServletResponse.SC_OK);
         } else {
-            response.setStatus(HttpServletResponse.SC_ACCEPTED);
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }
     }
 }
