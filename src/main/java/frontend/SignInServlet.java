@@ -1,17 +1,12 @@
 package frontend;
 
 import main.AccountService;
-import main.UserProfile;
-import templater.PageGenerator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class SignInServlet extends HttpServlet {
@@ -32,8 +27,8 @@ public class SignInServlet extends HttpServlet {
 
         if (accountService.getUser(email) != null) {
             if (accountService.getUser(email).getPassword().equals(password)) {
-                if (accountService.getSessions(request.getSession().getId()) == null)
-                    accountService.addSessions(request.getSession().getId(), accountService.getUser(email));
+                if (accountService.getSession(request.getSession().getId()) == null)
+                    accountService.addSession(request.getSession().getId(), accountService.getUser(email));
                     response.setStatus(HttpServletResponse.SC_OK);
             } else {
                 response.setHeader("Error", "Wrong password");

@@ -18,7 +18,7 @@ public class AccountService {
         return true;
     }
 
-    public void addSessions(String sessionId, UserProfile userProfile) {
+    public void addSession(String sessionId, UserProfile userProfile) {
         sessions.put(sessionId, userProfile);
     }
 
@@ -26,7 +26,7 @@ public class AccountService {
         return users.get(userName);
     }
 
-    public UserProfile getSessions(String sessionId) {
+    public UserProfile getSession(String sessionId) {
         return sessions.get(sessionId);
     }
 
@@ -38,5 +38,13 @@ public class AccountService {
         }
 
         return false;
+    }
+    
+    public Map<String, UserProfile> getUsers() {
+        return users;
+    }
+
+    public Map<String, UserProfile> getSessions() {
+        return sessions;
     }
 }
