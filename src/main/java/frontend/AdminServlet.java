@@ -37,6 +37,7 @@ public class AdminServlet extends HttpServlet {
 
         long shutDownTime = 0;
         try {
+            assert request != null;
             shutDownTime = Long.parseLong(request.getParameter("shutdown"));
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,20 +69,18 @@ public class AdminServlet extends HttpServlet {
             JSONObject usersJSON = new JSONObject();
             JSONObject sessionsJSON = new JSONObject();
 
-//            usersResponce.put("users", usersJSON);
-//            usersResponce.put("sessions", sessionsJSON);
-
             for (Map.Entry<String, UserProfile> entry : users.entrySet())
             {
                 usersResponce.accumulate("users", entry.getKey());
             }
 
+            assert sessions != null;
             for (Map.Entry<String, UserProfile> entry : sessions.entrySet())
             {
-//                ((JSONObject) usersResponce.get("sessions")).put(entry.getKey(), entry.getValue().getEmail());
                 usersResponce.accumulate("sessions", entry.getValue().getEmail());
             }
 
+            assert response != null;
             response.setContentType("application/json");
             response.getWriter().print(usersResponce.toString());
             response.getWriter().flush();

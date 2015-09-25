@@ -20,23 +20,27 @@ public class SignInServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
+        assert request != null;
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
+        assert response != null;
         response.setStatus(HttpServletResponse.SC_OK);
 
+        assert accountService != null;
         if (accountService.getUser(email) != null) {
             if (accountService.getUser(email).getPassword().equals(password)) {
                 if (accountService.getSession(request.getSession().getId()) == null)
                     accountService.addSession(request.getSession().getId(), accountService.getUser(email));
-                    response.setStatus(HttpServletResponse.SC_OK);
+
+                response.setStatus(HttpServletResponse.SC_OK);
             } else {
-                response.setHeader("Error", "Wrong password");
-                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                response.setHeader("Error", "0");
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             }
         } else {
-            response.setHeader("Error", "User doesn't exist");
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.setHeader("Error", "1");
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }
     }
 }

@@ -25,11 +25,15 @@ public class LogOutServlet  extends HttpServlet {
     public void doPost(HttpServletRequest request,
                       HttpServletResponse response) throws ServletException, IOException {
 
+        assert request != null;
         String session = request.getSession().getId();
 
+        assert accountService != null;
         if(accountService.deleteSession(session)) {
+            assert response != null;
             response.setStatus(HttpServletResponse.SC_OK);
         } else {
+            assert response != null;
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }

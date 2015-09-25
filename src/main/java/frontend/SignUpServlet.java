@@ -28,6 +28,7 @@ public class SignUpServlet extends HttpServlet {
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
 
+        assert request != null;
         String login = request.getParameter("login");
         String email = request.getParameter("email");
         String password1 = request.getParameter("password1");
@@ -41,10 +42,10 @@ public class SignUpServlet extends HttpServlet {
             assert accountService != null;
             if(accountService.getUser(email) == null) {
                 accountService.addUser(email, new UserProfile(login, password1, email));
-                response.setStatus(200);
+                response.setStatus(HttpServletResponse.SC_OK);
             } else {
-                response.setHeader("Error", "User already exists");
-                response.setStatus(500);
+                response.setHeader("Error", "2");
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             }
     }
 }

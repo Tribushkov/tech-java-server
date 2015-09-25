@@ -1,5 +1,7 @@
 package main;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,27 +13,34 @@ public class AccountService {
     private Map<String, UserProfile> users = new HashMap<>();
     private Map<String, UserProfile> sessions = new HashMap<>();
 
-    public boolean addUser(String userName, UserProfile userProfile) {
+    public boolean addUser(@Nullable String userName, UserProfile userProfile) {
+        assert users != null;
         if (users.containsKey(userName))
             return false;
         users.put(userName, userProfile);
         return true;
     }
 
-    public void addSession(String sessionId, UserProfile userProfile) {
+    public void addSession(String sessionId, @Nullable UserProfile userProfile) {
+        assert sessions != null;
         sessions.put(sessionId, userProfile);
     }
 
-    public UserProfile getUser(String userName) {
+    @Nullable
+    public UserProfile getUser(@Nullable String userName) {
+        assert users != null;
         return users.get(userName);
     }
 
-    public UserProfile getSession(String sessionId) {
+    @Nullable
+    public UserProfile getSession(@Nullable String sessionId) {
+        assert sessions != null;
         return sessions.get(sessionId);
     }
 
-    public boolean deleteSession(String sessionId) {
+    public boolean deleteSession(@Nullable String sessionId) {
 
+        assert sessions != null;
         if (sessions.get(sessionId) != null) {
             sessions.remove(sessionId);
             return true;
@@ -40,10 +49,12 @@ public class AccountService {
         return false;
     }
     
+    @Nullable
     public Map<String, UserProfile> getUsers() {
         return users;
     }
 
+    @Nullable
     public Map<String, UserProfile> getSessions() {
         return sessions;
     }

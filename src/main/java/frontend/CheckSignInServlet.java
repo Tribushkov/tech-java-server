@@ -22,10 +22,14 @@ public class CheckSignInServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request,
                       HttpServletResponse response) throws ServletException, IOException {
+        assert request != null;
         String session = request.getSession().getId();
+        assert accountService != null;
         if (accountService.getSession(session) != null) {
+            assert response != null;
             response.setStatus(HttpServletResponse.SC_OK);
         } else {
+            assert response != null;
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }
     }
