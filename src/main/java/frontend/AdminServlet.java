@@ -35,32 +35,32 @@ public class AdminServlet extends HttpServlet {
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws ServletException, IOException {
 
-        long shutDownTime = 0;
-        try {
-            assert request != null;
-            shutDownTime = Long.parseLong(request.getParameter("shutdown"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        long shutDownTime = 0;
+//        try {
+//            assert request != null;
+//            shutDownTime = Long.parseLong(request.getParameter("shutdown"));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
-        if (shutDownTime != 0) {
-            assert server != null;
-            server.setStopTimeout(shutDownTime);
-            try {
-                new Thread() {
-                    @Override
-                    public void run() {
-                        try {
-                            server.stop();
-                        } catch (Exception ex) {
-                            System.out.println("Failed to stop Jetty");
-                        }
-                    }
-                }.start();
-            } catch (RuntimeException e) {
-                e.printStackTrace();
-            }
-        } else {
+//        if (shutDownTime != 0) {
+//            assert server != null;
+//            server.setStopTimeout(shutDownTime);
+//            try {
+//                new Thread() {
+//                    @Override
+//                    public void run() {
+//                        try {
+//                            server.stop();
+//                        } catch (Exception ex) {
+//                            System.out.println("Failed to stop Jetty");
+//                        }
+//                    }
+//                }.start();
+//            } catch (RuntimeException e) {
+//                e.printStackTrace();
+//            }
+//        } else {
 
             Map<String, UserProfile> users = accountService.getUsers();
             Map<String, UserProfile> sessions = accountService.getSessions();
@@ -74,7 +74,6 @@ public class AdminServlet extends HttpServlet {
                 usersResponce.accumulate("users", entry.getKey());
             }
 
-            assert sessions != null;
             for (Map.Entry<String, UserProfile> entry : sessions.entrySet())
             {
                 usersResponce.accumulate("sessions", entry.getValue().getEmail());
@@ -85,6 +84,6 @@ public class AdminServlet extends HttpServlet {
             response.getWriter().print(usersResponce.toString());
             response.getWriter().flush();
 
-        }
+//        }
     }
 }
