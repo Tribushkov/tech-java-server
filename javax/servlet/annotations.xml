@@ -1,0 +1,8 @@
+<root>
+    <item name='javax.servlet.ServletRequest java.lang.String getParameter(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='javax.servlet.ServletResponse java.io.PrintWriter getWriter()'>
+      <annotation name='org.jetbrains.annotations.Nullable'/>
+    </item>
+</root>

@@ -17,12 +17,10 @@ import javax.servlet.Servlet;
 public class Main {
     public static void main(String[] args) throws Exception, NumberFormatException, InterruptedException {
 
-        assert args != null;
-        int port;
         if (args.length == 1) {
             String portString = args[0];
 
-            port = Integer.valueOf(portString);
+            int port = Integer.valueOf(portString);
 
 
             Server server = new Server(port);
@@ -34,7 +32,7 @@ public class Main {
             Servlet signin = new SignInServlet(accountService);
             Servlet signUp = new SignUpServlet(accountService);
             Servlet logOut = new LogOutServlet(accountService);
-            Servlet admin = new AdminServlet(server, accountService);
+            Servlet admin = new AdminServlet(accountService);
             Servlet checkSignIn = new CheckSignInServlet(accountService);
             Servlet stopServer = new StopServerServlet(server);
 

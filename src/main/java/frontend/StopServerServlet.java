@@ -1,6 +1,7 @@
 package frontend;
 
 import org.eclipse.jetty.server.Server;
+import org.jetbrains.annotations.NotNull;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,7 +22,7 @@ public class StopServerServlet extends HttpServlet {
     }
 
     @Override
-    public void doGet(HttpServletRequest request,
+    public void doGet(@NotNull HttpServletRequest request,
                       HttpServletResponse response) throws ServletException, IOException {
 
         long shutDownTime = Long.parseLong(request.getParameter("shutdown"));
