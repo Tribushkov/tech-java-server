@@ -14,10 +14,11 @@ import java.io.IOException;
  */
 public class StopServerServlet extends HttpServlet {
 
+    @NotNull
     private Server server;
 
 
-    public StopServerServlet(Server server) {
+    public StopServerServlet(@NotNull Server server) {
         this.server = server;
     }
 
@@ -28,7 +29,6 @@ public class StopServerServlet extends HttpServlet {
         long shutDownTime = Long.parseLong(request.getParameter("shutdown"));
 
         if (shutDownTime != 0) {
-            assert server != null;
             server.setStopTimeout(shutDownTime);
             try {
                 new Thread() {

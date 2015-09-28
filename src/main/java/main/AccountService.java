@@ -23,7 +23,7 @@ public class AccountService {
         return true;
     }
 
-    public void addSession(String sessionId, @Nullable UserProfile userProfile) {
+    public void addSession(@Nullable String sessionId, @Nullable UserProfile userProfile) {
         sessions.put(sessionId, userProfile);
     }
 

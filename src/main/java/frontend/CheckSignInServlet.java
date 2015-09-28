@@ -1,6 +1,7 @@
 package frontend;
 
 import main.AccountService;
+import org.jetbrains.annotations.NotNull;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,23 +14,20 @@ import java.io.IOException;
  */
 public class CheckSignInServlet extends HttpServlet {
 
+    @NotNull
     private AccountService accountService;
 
-    public CheckSignInServlet(AccountService accountService) {
+    public CheckSignInServlet(@NotNull AccountService accountService) {
         this.accountService = accountService;
     }
 
     @Override
-    public void doPost(HttpServletRequest request,
-                      HttpServletResponse response) throws ServletException, IOException {
-        assert request != null;
+    public void doPost(@NotNull HttpServletRequest request,
+                       @NotNull HttpServletResponse response) throws ServletException, IOException {
         String session = request.getSession().getId();
-        assert accountService != null;
         if (accountService.getSession(session) != null) {
-            assert response != null;
             response.setStatus(HttpServletResponse.SC_OK);
         } else {
-            assert response != null;
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }
     }

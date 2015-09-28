@@ -2,6 +2,7 @@ package frontend;
 
 import main.AccountService;
 import main.UserProfile;
+import org.jetbrains.annotations.NotNull;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,33 +15,31 @@ import java.io.IOException;
  */
 public class SignUpServlet extends HttpServlet {
 
+    @NotNull
     private AccountService accountService;
 
-    public SignUpServlet(AccountService accountService) {
+    public SignUpServlet(@NotNull AccountService accountService) {
         this.accountService = accountService;
     }
 
 
     @Override
-    public void doPost(HttpServletRequest request,
-                       HttpServletResponse response) throws ServletException, IOException {
+    public void doPost(@NotNull HttpServletRequest request,
+                       @NotNull HttpServletResponse response) throws ServletException, IOException {
 
-        assert request != null;
         String login = request.getParameter("login");
         String email = request.getParameter("email");
         String password1 = request.getParameter("password1");
 
-        assert response != null;
         response.setStatus(HttpServletResponse.SC_OK);
 
 
-            assert accountService != null;
-            if(accountService.getUser(email) == null) {
-                accountService.addUser(email, new UserProfile(login, password1, email));
-                response.setStatus(HttpServletResponse.SC_OK);
-            } else {
-                response.setHeader("Error", "2");
-                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            }
+        if (accountService.getUser(email) == null) {
+            accountService.addUser(email, new UserProfile(login, password1, email));
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            response.setHeader("Error", "2");
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        }
     }
 }

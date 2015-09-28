@@ -1,6 +1,8 @@
 package frontend;
 
 import main.AccountService;
+import main.UserProfile;
+import org.jetbrains.annotations.NotNull;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,24 +12,22 @@ import java.io.IOException;
 
 
 public class SignInServlet extends HttpServlet {
+    @NotNull
     private AccountService accountService;
 
-    public SignInServlet(AccountService accountService) {
+    public SignInServlet(@NotNull AccountService accountService) {
         this.accountService = accountService;
     }
 
 
     @Override
-    public void doPost(HttpServletRequest request,
-                       HttpServletResponse response) throws ServletException, IOException {
-        assert request != null;
+    public void doPost(@NotNull HttpServletRequest request,
+                       @NotNull HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        assert response != null;
         response.setStatus(HttpServletResponse.SC_OK);
 
-        assert accountService != null;
         if (accountService.getUser(email) != null) {
             if (accountService.getUser(email).getPassword().equals(password)) {
                 if (accountService.getSession(request.getSession().getId()) == null)

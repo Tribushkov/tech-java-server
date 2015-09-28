@@ -26,13 +26,12 @@ public class AdminServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request,
-                      HttpServletResponse response) throws ServletException, IOException {
+                      @NotNull HttpServletResponse response) throws ServletException, IOException {
 
         Map<String, UserProfile> users = accountService.getUsers();
         Map<String, UserProfile> sessions = accountService.getSessions();
 
         JSONObject usersResponce = new JSONObject();
-
 
         for (Map.Entry<String, UserProfile> entry : users.entrySet()) {
             usersResponce.accumulate("users", entry.getKey());
@@ -42,7 +41,6 @@ public class AdminServlet extends HttpServlet {
             usersResponce.accumulate("sessions", entry.getValue().getEmail());
         }
 
-        assert response != null;
         response.setContentType("application/json");
         response.getWriter().print(usersResponce.toString());
         response.getWriter().flush();
