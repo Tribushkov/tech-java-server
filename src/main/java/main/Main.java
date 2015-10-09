@@ -1,7 +1,8 @@
 package main;
 
 import javax.servlet.Servlet;
-import frontend.SignUpServlet;
+
+import frontend.*;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -22,10 +23,20 @@ public class Main {
 
         AccountService accountService = new AccountService();
 
-        Servlet signup = new SignUpServlet(accountService);
+        Servlet signUp = new SignUpServlet(accountService);
+        Servlet signIn = new SignInServlet(accountService);
+        Servlet logOut = new LogOutServlet(accountService);
+        Servlet admin  = new AdminServlet(accountService);
+        Servlet check  = new CheckSignInServlet(accountService);
+        Servlet stop   = new StopServerServlet(server);
 
         ServletContextHandler contextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        contextHandler.addServlet(new ServletHolder(signup), "/signin");
+        contextHandler.addServlet(new ServletHolder(signUp), "/signup");
+        contextHandler.addServlet(new ServletHolder(signIn), "/signin");
+        contextHandler.addServlet(new ServletHolder(logOut), "/logout");
+        contextHandler.addServlet(new ServletHolder(admin), "/adminpage");
+        contextHandler.addServlet(new ServletHolder(check), "/islogged");
+        contextHandler.addServlet(new ServletHolder(stop), "/admin");
 
         ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setDirectoriesListed(true);

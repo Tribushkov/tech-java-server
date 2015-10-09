@@ -21,6 +21,10 @@ public class AccountService {
         return true;
     }
 
+    public void addSession(@Nullable String id, @Nullable UserProfile user) {
+        sessions.put(id, user);
+    }
+
     @Nullable
     public UserProfile getUser(@Nullable String name) {
         return users.get(name);

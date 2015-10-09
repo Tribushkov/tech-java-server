@@ -1,6 +1,5 @@
 package frontend;
 
-import main.UserProfile;
 import main.AccountService;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -9,28 +8,25 @@ import org.jetbrains.annotations.NotNull;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class SignUpServlet extends HttpServlet {
+
+public class LogOutServlet extends HttpServlet {
 
     @NotNull
     private AccountService accountService;
 
 
-    public SignUpServlet(@NotNull AccountService accountService) {
+    public LogOutServlet(@NotNull AccountService accountService) {
         this.accountService = accountService;
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String email = req.getParameter("email");
-        String login = req.getParameter("login");
-        String password = req.getParameter("password1");
+        String id = req.getSession().getId();
 
-        if (accountService.getUser(email) == null) {
-            accountService.addUser(email, new UserProfile(email, login, password));
+        if (accountService.getSession(id) != null) {
             resp.setStatus(HttpServletResponse.SC_OK);
         } else {
-            resp.setHeader("Error", "2");
-            resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
