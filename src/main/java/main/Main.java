@@ -2,8 +2,8 @@ package main;
 
 import javax.servlet.Servlet;
 import frontend.SignUpServlet;
-import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -35,7 +35,7 @@ public class Main {
         handlers.setHandlers(new Handler[]{resourceHandler, contextHandler});
 
         server.setHandler(handlers);
-        
+
         try {
             server.start();
             server.join();
