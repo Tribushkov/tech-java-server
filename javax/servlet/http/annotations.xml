@@ -1,5 +1,0 @@
-<root>
-  <item name='javax.servlet.http.HttpServletRequest javax.servlet.http.HttpSession getSession()'>
-    <annotation name='org.jetbrains.annotations.NotNull'/>
-  </item>
-</root>
