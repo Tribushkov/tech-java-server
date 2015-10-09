@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AdminServlet extends HttpServlet {
 
     @NotNull
-    private AccountService accountService;
+    private final AccountService accountService;
 
 
     public AdminServlet(@NotNull AccountService accountService) {

@@ -9,16 +9,14 @@ import java.util.Map;
 public class AccountService {
 
     @NotNull
-    private Map<String, UserProfile> users = new HashMap<>();
+    private final Map<String, UserProfile> users = new HashMap<>();
     @NotNull
-    private Map<String, UserProfile> sessions = new HashMap<>();
+    private final Map<String, UserProfile> sessions = new HashMap<>();
 
 
-    public boolean addUser(@Nullable String name, UserProfile profile) {
-        if (users.containsKey(name))
-            return false;
-        users.put(name, profile);
-        return true;
+    public void addUser(@Nullable String name, UserProfile profile) {
+        if (!users.containsKey(name))
+            users.put(name, profile);
     }
 
     public void addSession(@Nullable String id, @Nullable UserProfile user) {

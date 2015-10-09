@@ -5,11 +5,11 @@ import org.jetbrains.annotations.NotNull;
 public class UserProfile {
 
     @NotNull
-    private String email;
+    private final String email;
     @NotNull
-    private String login;
+    private final String login;
     @NotNull
-    private String password;
+    private final String password;
 
 
     public UserProfile(@NotNull String email, @NotNull String login, @NotNull String password) {

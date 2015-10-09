@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LogOutServlet extends HttpServlet {
 
     @NotNull
-    private AccountService accountService;
+    private final AccountService accountService;
 
 
     public LogOutServlet(@NotNull AccountService accountService) {
@@ -23,7 +23,7 @@ public class LogOutServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getSession().getId();
 
-        if (accountService.getSession(id) != null) {
+        if (accountService.deleteSession(id)) {
             resp.setStatus(HttpServletResponse.SC_OK);
         } else {
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

@@ -1,8 +1,7 @@
 package main;
 
-import javax.servlet.Servlet;
-
 import frontend.*;
+import javax.servlet.Servlet;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -10,7 +9,7 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 
-public class Main {
+class Main {
     public static void main(String[] args) {
         Server server;
         try {

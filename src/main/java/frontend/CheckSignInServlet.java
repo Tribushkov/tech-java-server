@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 public class CheckSignInServlet extends HttpServlet {
 
     @NotNull
-    private AccountService accountService;
+    private final AccountService accountService;
 
 
     public CheckSignInServlet(@NotNull AccountService accountService) {

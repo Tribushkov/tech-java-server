@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 public class StopServerServlet  extends HttpServlet {
 
     @NotNull
-    private Server server;
+    private final Server server;
 
 
     public StopServerServlet(@NotNull Server server) {

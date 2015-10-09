@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 public class SignUpServlet extends HttpServlet {
 
     @NotNull
-    private AccountService accountService;
+    private final AccountService accountService;
 
 
     public SignUpServlet(@NotNull AccountService accountService) {
