@@ -23,11 +23,17 @@ public class SignUpServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter("email");
         String login = req.getParameter("login");
-        String password = req.getParameter("password1");
+        String password1 = req.getParameter("password1");
+        String password2 = req.getParameter("password2");
 
         if (accountService.getUser(email) == null) {
-            accountService.addUser(email, new UserProfile(email, login, password));
-            resp.setStatus(HttpServletResponse.SC_OK);
+            if (!password1.equals(password2)) {
+                resp.setHeader("Error", "1");
+                resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            } else {
+                accountService.addUser(email, new UserProfile(email, login, password1));
+                resp.setStatus(HttpServletResponse.SC_OK);
+            }
         } else {
             resp.setHeader("Error", "2");
             resp.setStatus(HttpServletResponse.SC_FORBIDDEN);

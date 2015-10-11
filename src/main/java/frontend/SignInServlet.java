@@ -9,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 public class SignInServlet extends HttpServlet {
 
     @NotNull
