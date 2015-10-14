@@ -5,7 +5,7 @@ import main.AccountService;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
-import org.jetbrains.annotations.NotNull;
+import com.sun.istack.internal.NotNull;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
