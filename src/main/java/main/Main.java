@@ -49,6 +49,8 @@ class Main {
         try {
             server.start();
             server.join();
+        } catch (InterruptedException e) {
+            System.out.println("Server failed");
         } catch (Exception e) {
             System.out.println("Server failed");
         }
