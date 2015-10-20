@@ -1,6 +1,6 @@
 package main;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 public class UserProfile {
 

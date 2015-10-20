@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

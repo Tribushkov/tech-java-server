@@ -9,7 +9,7 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 
-class Main {
+public class Main {
     public static void main(String[] args) {
         Server server;
         try {
@@ -46,6 +46,7 @@ class Main {
 
         server.setHandler(handlers);
 
+        //noinspection TryWithIdenticalCatches
         try {
             server.start();
             server.join();
