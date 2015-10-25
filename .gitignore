@@ -1,11 +1,5 @@
 .idea/
 target/
-templates/
-server_tml/
-node_modules/
-public_hmtl/
-Gruntfile.js
-package.json
 
 .DS_Store
 

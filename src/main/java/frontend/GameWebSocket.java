@@ -78,6 +78,7 @@ public class GameWebSocket {
         jsonStart.put("status", "increment");
         jsonStart.put("name", myName);
         jsonStart.put("score", user.getMyScore());
+        jsonStart.put("square", )
         try {
             session.getRemote().sendString(jsonStart.toJSONString());
         } catch (Exception e) {
