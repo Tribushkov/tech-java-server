@@ -1,19 +1,26 @@
 package main;
 
+import base.GameMechanics;
+import base.WebSocketService;
 import frontend.*;
 import javax.servlet.Servlet;
+
+import mechanics.GameMechanicsImpl;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.server.handler.ResourceHandler;
+import org.eclipse.jetty.websocket.server.WebSocketHandler;
+import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 
 public class Main {
     public static void main(String[] args) {
         Server server;
         try {
-            server = new Server(Integer.parseInt(args[0]));
+//            server = new Server(Integer.parseInt(args[0]));
+            server = new Server(1488);
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("You have to give a port number!"); return;
         } catch (NumberFormatException e) {
@@ -21,6 +28,8 @@ public class Main {
         }
 
         AccountService accountService = new AccountService();
+        WebSocketService webSocketService = new WebSocketServiceImpl();
+        GameMechanics gameMechanics = new GameMechanicsImpl(webSocketService);
 
         Servlet signUp = new SignUpServlet(accountService);
         Servlet signIn = new SignInServlet(accountService);
@@ -36,6 +45,10 @@ public class Main {
         contextHandler.addServlet(new ServletHolder(admin), "/adminpage");
         contextHandler.addServlet(new ServletHolder(check), "/islogged");
         contextHandler.addServlet(new ServletHolder(stop), "/admin");
+//        contextHandler.addServlet(new ServletHolder(new GameServlet(gameMechanics, accountService)), "/game");
+        contextHandler.addServlet(new ServletHolder(new WebSocketGameServlet(accountService, gameMechanics,
+                webSocketService)), "/game");
+
 
         ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setDirectoriesListed(true);
@@ -46,10 +59,12 @@ public class Main {
 
         server.setHandler(handlers);
 
+
         //noinspection TryWithIdenticalCatches
         try {
             server.start();
             server.join();
+            gameMechanics.run();
         } catch (InterruptedException e) {
             System.out.println("Server failed");
         } catch (Exception e) {

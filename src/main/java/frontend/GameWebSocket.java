@@ -14,6 +14,8 @@ import org.json.simple.JSONObject;
 /**
  * Created by dmitri on 23.10.15.
  */
+
+@WebSocket
 public class GameWebSocket {
     private String myName;
     private Session session;
@@ -43,10 +45,12 @@ public class GameWebSocket {
 
     public void gameOver(GameUser user, boolean win) {
         try {
+
             JSONObject jsonStart = new JSONObject();
             jsonStart.put("status", "finish");
             jsonStart.put("win", win);
             session.getRemote().sendString(jsonStart.toJSONString());
+
         } catch (Exception e) {
             System.out.print(e.toString());
         }
@@ -54,13 +58,16 @@ public class GameWebSocket {
 
     @OnWebSocketMessage
     public void onMessage(@NotNull String data) {
+        System.out.println("___DATA___");
+        System.out.println(data);
         String[] splitted = data.split(" ");
         gameMechanics.tapSquare(myName, Integer.valueOf(splitted[0]), Integer.valueOf(splitted[1]),
                 Integer.valueOf(splitted[2]));
     }
 
     @OnWebSocketConnect
-    public void onOpen(Session session) {
+    public void onConnect(Session session) {
+        System.out.println("___CONNECTION OPENED___");
         setSession(session);
         webSocketService.addUser(this);
         gameMechanics.addUser(myName);
@@ -71,6 +78,7 @@ public class GameWebSocket {
         jsonStart.put("status", "increment");
         jsonStart.put("name", myName);
         jsonStart.put("score", user.getMyScore());
+        jsonStart.put("square", )
         try {
             session.getRemote().sendString(jsonStart.toJSONString());
         } catch (Exception e) {

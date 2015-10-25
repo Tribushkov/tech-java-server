@@ -34,7 +34,7 @@ public class GameMechanicsImpl implements GameMechanics {
 
     private WebSocketService webSocketService;
 
-    GameMechanicsImpl(WebSocketService webSocketService) {
+    public GameMechanicsImpl(WebSocketService webSocketService) {
         for (int i= 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 squares[i][j] = 0;
@@ -47,8 +47,10 @@ public class GameMechanicsImpl implements GameMechanics {
 
     @Override
     public void addUser(String user) {
+        System.out.println("_________ADD USER_________");
         if (anticipant != null) {
-            starGame(user);
+            System.out.println("_________S_________");
+            startGame(user);
             anticipant = null;
         } else {
             anticipant = user;
@@ -86,7 +88,10 @@ public class GameMechanicsImpl implements GameMechanics {
         }
     }
 
-    private void starGame(String first) {
+    private void startGame(String first) {
+
+        System.out.println("_________START GAME_________");
+
         String second = anticipant;
         GameSession gameSession = new GameSession(first, second);
         nameToGame.put(first, gameSession);
@@ -94,5 +99,6 @@ public class GameMechanicsImpl implements GameMechanics {
 
         webSocketService.notifyStartGame(gameSession.getSelf(first));
         webSocketService.notifyStartGame(gameSession.getSelf(second));
+
     }
 }

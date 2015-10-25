@@ -10,6 +10,7 @@ public class AccountService {
 
     @NotNull
     private final Map<String, UserProfile> users = new HashMap<>();
+
     @NotNull
     private final Map<String, UserProfile> sessions = new HashMap<>();
 
