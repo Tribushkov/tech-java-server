@@ -19,9 +19,9 @@ public class GameMechanicsImpl implements GameMechanics {
 
     private String anticipant;
 
-    private static int size = 5;
+    private static int size = 10;
 
-    private int squares[][] = new int[size][size];
+    private String squares[][] = new String[size][size];
 
     private static final int STEP_TIME = 100;
 
@@ -37,7 +37,7 @@ public class GameMechanicsImpl implements GameMechanics {
     public GameMechanicsImpl(WebSocketService webSocketService) {
         for (int i= 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                squares[i][j] = 0;
+                squares[i][j] = "";
             }
         }
 
@@ -57,17 +57,49 @@ public class GameMechanicsImpl implements GameMechanics {
         }
     }
 
+
+
+    private void setStateOfSquare(String userName, int row, int column) {
+        GameSession myGameSession = nameToGame.get(userName);
+
+        squares[row][column] = userName.equals(myGameSession.getSelf(userName).getMyName())
+                ? myGameSession.getSelf(userName).getMyName()
+                : myGameSession.getEnemy(userName).getMyName();
+
+    }
+
+    private String getStateOfSquare(int row, int column) {
+        return squares[row][column];
+    }
+
+    private int getIncrementScore(String userName, int row, int column) {
+
+        String enemyName = nameToGame.get(userName).getEnemy(userName).getMyName();
+
+        int incrementor = 0;
+
+        if (squares[row][column].equals("")) {
+            incrementor = 1;
+        } else if (squares[row][column].equals(enemyName)) {
+            incrementor = 2;
+        }
+
+        return incrementor;
+    }
+
     @Override
-    public void tapSquare(String userName, int row, int column, int stateOfSquare) {
+    public void tapSquare(String userName, int row, int column) {
         GameSession myGameSession = nameToGame.get(userName);
         GameUser myUser = myGameSession.getSelf(userName);
         GameUser enemyUser = myGameSession.getEnemy(userName);
 
-        myUser.incrementMyScore(stateOfSquare);
-        enemyUser.incrementEnemyScore(stateOfSquare);
+        myUser.incrementMyScore(getIncrementScore(userName, row, column));
+        enemyUser.incrementEnemyScore(getIncrementScore(userName, row, column));
 
-        webSocketService.notifyMyNewScore(myUser);
-        webSocketService.notifyEnemyNewScore(enemyUser);
+        setStateOfSquare(userName, row, column);
+
+        webSocketService.notifyMyNewScore(myUser, row, column);
+        webSocketService.notifyEnemyNewScore(enemyUser, row, column);
     }
 
     @Override
@@ -94,6 +126,7 @@ public class GameMechanicsImpl implements GameMechanics {
 
         String second = anticipant;
         GameSession gameSession = new GameSession(first, second);
+        allSessions.add(gameSession);
         nameToGame.put(first, gameSession);
         nameToGame.put(second, gameSession);
 

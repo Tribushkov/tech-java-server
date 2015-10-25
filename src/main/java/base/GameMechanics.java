@@ -6,7 +6,7 @@ package base;
 public interface GameMechanics {
     void addUser(String user);
 
-    void tapSquare(String userName, int row, int column, int stateSquare);
+    void tapSquare(String userName, int row, int column);
 
     void run();
 }

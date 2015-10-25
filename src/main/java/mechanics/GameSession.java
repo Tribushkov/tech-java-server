@@ -29,6 +29,10 @@ public class GameSession {
         GameUser gameUser2 = new GameUser(user2);
         gameUser2.setEnemyName(user1);
 
+        gameUser1.setEnemyColor(gameUser2.getMyColor());
+        gameUser2.setEnemyColor(gameUser1.getMyColor());
+
+
         users.put(user1, gameUser1);
         users.put(user2, gameUser2);
 

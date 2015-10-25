@@ -13,19 +13,23 @@ public class WebSocketServiceImpl implements WebSocketService {
 
     private Map<String, GameWebSocket> userSockets = new HashMap<>();
 
+    @Override
     public void addUser(GameWebSocket user) {
         System.out.println("___ADD USER TO USERSOCKETS____");
         userSockets.put(user.getMyName(), user);
     }
 
-    public void notifyMyNewScore(GameUser user) {
-        userSockets.get(user.getMyName()).setMyScore(user);
+    @Override
+    public void notifyMyNewScore(GameUser user, int row, int column) {
+        userSockets.get(user.getMyName()).setMyScore(user, row, column);
     }
 
-    public void notifyEnemyNewScore(GameUser user) {
-        userSockets.get(user.getMyName()).setEnemyScore(user);
+    @Override
+    public void notifyEnemyNewScore(GameUser user, int row, int column) {
+        userSockets.get(user.getMyName()).setEnemyScore(user, row, column);
     }
 
+    @Override
     public void notifyStartGame(GameUser user) {
         GameWebSocket gameWebSocket = userSockets.get(user.getMyName());
         System.out.println("USER");

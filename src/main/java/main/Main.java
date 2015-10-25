@@ -12,8 +12,6 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.server.handler.ResourceHandler;
-import org.eclipse.jetty.websocket.server.WebSocketHandler;
-import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 
 public class Main {
     public static void main(String[] args) {
@@ -45,7 +43,7 @@ public class Main {
         contextHandler.addServlet(new ServletHolder(admin), "/adminpage");
         contextHandler.addServlet(new ServletHolder(check), "/islogged");
         contextHandler.addServlet(new ServletHolder(stop), "/admin");
-//        contextHandler.addServlet(new ServletHolder(new GameServlet(gameMechanics, accountService)), "/game");
+        contextHandler.addServlet(new ServletHolder(new GameServlet(gameMechanics, accountService)), "/gamewating");
         contextHandler.addServlet(new ServletHolder(new WebSocketGameServlet(accountService, gameMechanics,
                 webSocketService)), "/game");
 
@@ -63,7 +61,7 @@ public class Main {
         //noinspection TryWithIdenticalCatches
         try {
             server.start();
-            server.join();
+//            server.join();
             gameMechanics.run();
         } catch (InterruptedException e) {
             System.out.println("Server failed");
