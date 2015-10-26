@@ -26,6 +26,7 @@ public class GameWebSocket {
         this.myName = myName;
         this.gameMechanics = gameMechanics;
         this.webSocketService = webSocketService;
+        System.out.println(webSocketService.toString());
     }
 
     public String getMyName() {
@@ -47,7 +48,7 @@ public class GameWebSocket {
 
     public void gameOver(GameUser user, boolean win) {
         try {
-
+            System.out.println("GAMEOVER");
             JSONObject jsonStart = new JSONObject();
             jsonStart.put("status", "finish");
             jsonStart.put("win", win);
@@ -124,5 +125,10 @@ public class GameWebSocket {
     @OnWebSocketClose
     public void onClose(int statusCode, String reason) {
         System.out.println("CONNECTION CLOSED");
+        try {
+            this.finalize();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
     }
 }

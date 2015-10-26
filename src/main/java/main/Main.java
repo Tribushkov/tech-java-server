@@ -58,7 +58,7 @@ public class Main {
         server.setHandler(handlers);
 
 
-        //noinspection TryWithIdenticalCatches
+        //noinspeection TryWithIdenticalCatches
         try {
             server.start();
 //            server.join();

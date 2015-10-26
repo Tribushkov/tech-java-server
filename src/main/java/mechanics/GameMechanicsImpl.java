@@ -25,7 +25,7 @@ public class GameMechanicsImpl implements GameMechanics {
 
     private static final int STEP_TIME = 100;
 
-    private static final int gameTime = 20 * 1000;
+    private static final int gameTime = 60 * 1000;
 
     private Map<String, GameSession> nameToGame = new HashMap<>();
 
@@ -50,6 +50,7 @@ public class GameMechanicsImpl implements GameMechanics {
 
     @Override
     public void addUser(String user) {
+        System.out.println(user);
         if (anticipant != null) {
             startGame(user);
             anticipant = null;
@@ -103,7 +104,7 @@ public class GameMechanicsImpl implements GameMechanics {
 
     @Override
     public void run() {
-        while (this.gameStatus) {
+        while (true) {
             gmStep();
             TimeHelper.sleep(STEP_TIME);
         }
@@ -132,17 +133,17 @@ public class GameMechanicsImpl implements GameMechanics {
         String second = anticipant;
         GameSession gameSession = new GameSession(first, second);
         allSessions.add(gameSession);
+        System.out.println(first);
         nameToGame.put(first, gameSession);
+        System.out.println(second);
         nameToGame.put(second, gameSession);
 
+        System.out.println("NOTIFY 1");
         webSocketService.notifyStartGame(gameSession.getSelf(first));
+        System.out.println("NOTIFY 2");
         webSocketService.notifyStartGame(gameSession.getSelf(second));
 
-        if (!this.gameStatus) {
-            clearSquares();
-            this.gameStatus = true;
-            this.run();
-        }
+        clearSquares();
 
     }
 }
