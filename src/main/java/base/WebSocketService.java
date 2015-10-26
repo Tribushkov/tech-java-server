@@ -16,4 +16,6 @@ public interface WebSocketService {
     void notifyStartGame(GameUser user);
 
     void notifyGameOver(GameUser user, boolean win);
+
+    void notifyTime(GameUser user, long time);
 }

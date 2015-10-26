@@ -15,7 +15,6 @@ public class WebSocketServiceImpl implements WebSocketService {
 
     @Override
     public void addUser(GameWebSocket user) {
-        System.out.println("___ADD USER TO USERSOCKETS____");
         userSockets.put(user.getMyName(), user);
     }
 
@@ -32,15 +31,17 @@ public class WebSocketServiceImpl implements WebSocketService {
     @Override
     public void notifyStartGame(GameUser user) {
         GameWebSocket gameWebSocket = userSockets.get(user.getMyName());
-        System.out.println("USER");
-        System.out.println(user.getMyName());
-        System.out.println(gameWebSocket.toString());
         gameWebSocket.startGame(user);
     }
 
     @Override
     public void notifyGameOver(GameUser user, boolean win) {
         userSockets.get(user.getMyName()).gameOver(user, win);
+        userSockets.remove(user.getMyName());
     }
 
+    @Override
+    public void notifyTime(GameUser user, long time) {
+        userSockets.get(user.getMyName()).sendTime(user, time);
+    }
 }

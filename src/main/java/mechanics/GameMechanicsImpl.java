@@ -19,45 +19,44 @@ public class GameMechanicsImpl implements GameMechanics {
 
     private String anticipant;
 
-    private static int size = 10;
+    private static int size = 6;
 
     private String squares[][] = new String[size][size];
 
     private static final int STEP_TIME = 100;
 
-    private static final int gameTime = 15 * 1000;
+    private static final int gameTime = 20 * 1000;
 
     private Map<String, GameSession> nameToGame = new HashMap<>();
 
     private Set<GameSession> allSessions = new HashSet<>();
 
+    private boolean gameStatus = true;
 
     private WebSocketService webSocketService;
 
     public GameMechanicsImpl(WebSocketService webSocketService) {
+        clearSquares();
+        this.webSocketService = webSocketService;
+    }
+
+    private void clearSquares() {
         for (int i= 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 squares[i][j] = "";
             }
         }
-
-        this.webSocketService = webSocketService;
-
     }
 
     @Override
     public void addUser(String user) {
-        System.out.println("_________ADD USER_________");
         if (anticipant != null) {
-            System.out.println("_________S_________");
             startGame(user);
             anticipant = null;
         } else {
             anticipant = user;
         }
     }
-
-
 
     private void setStateOfSquare(String userName, int row, int column) {
         GameSession myGameSession = nameToGame.get(userName);
@@ -104,7 +103,7 @@ public class GameMechanicsImpl implements GameMechanics {
 
     @Override
     public void run() {
-        while (true) {
+        while (this.gameStatus) {
             gmStep();
             TimeHelper.sleep(STEP_TIME);
         }
@@ -116,13 +115,19 @@ public class GameMechanicsImpl implements GameMechanics {
                 boolean firstWin = session.isFirstWin();
                 webSocketService.notifyGameOver(session.getFirst(), firstWin);
                 webSocketService.notifyGameOver(session.getSecond(), !firstWin);
+                this.gameStatus = false;
+                nameToGame.remove(session.getFirst().getMyName());
+                nameToGame.remove(session.getSecond().getMyName());
+                allSessions.remove(session);
+                anticipant = null;
+            } else {
+                webSocketService.notifyTime(session.getFirst(), session.getSessionTime());
+                webSocketService.notifyTime(session.getSecond(), session.getSessionTime());
             }
         }
     }
 
     private void startGame(String first) {
-
-        System.out.println("_________START GAME_________");
 
         String second = anticipant;
         GameSession gameSession = new GameSession(first, second);
@@ -132,6 +137,12 @@ public class GameMechanicsImpl implements GameMechanics {
 
         webSocketService.notifyStartGame(gameSession.getSelf(first));
         webSocketService.notifyStartGame(gameSession.getSelf(second));
+
+        if (!this.gameStatus) {
+            clearSquares();
+            this.gameStatus = true;
+            this.run();
+        }
 
     }
 }

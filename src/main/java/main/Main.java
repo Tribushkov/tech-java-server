@@ -17,8 +17,8 @@ public class Main {
     public static void main(String[] args) {
         Server server;
         try {
-//            server = new Server(Integer.parseInt(args[0]));
-            server = new Server(1488);
+            server = new Server(Integer.parseInt(args[0]));
+//            server = new Server(8080);
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("You have to give a port number!"); return;
         } catch (NumberFormatException e) {

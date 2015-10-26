@@ -20,8 +20,6 @@ public class GameSession {
 
     public GameSession(String user1, String user2) {
 
-        System.out.println("____CREATE GAME SESSION___");
-
         startTime = new Date().getTime();
         GameUser gameUser1 = new GameUser(user1);
         gameUser1.setEnemyName(user2);
