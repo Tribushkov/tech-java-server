@@ -38,9 +38,6 @@ public class GameServlet extends HttpServlet {
         try {
             String id = request.getSession().getId();
 
-            System.out.println("AZAZAZA");
-            System.out.println(id);
-
             if (accountService.getSession(id) == null) {
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             } else {

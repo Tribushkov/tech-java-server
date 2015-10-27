@@ -35,7 +35,6 @@ public class GameWebSocket {
 
     public void startGame(GameUser user) {
         try {
-            System.out.println("GAME STARTING");
             JSONObject jsonStart = new JSONObject();
             jsonStart.put("status", "start");
             jsonStart.put("enemyName", user.getEnemyName());
@@ -48,12 +47,10 @@ public class GameWebSocket {
 
     public void gameOver(GameUser user, boolean win) {
         try {
-            System.out.println("GAMEOVER");
             JSONObject jsonStart = new JSONObject();
             jsonStart.put("status", "finish");
             jsonStart.put("win", win);
             session.getRemote().sendString(jsonStart.toJSONString());
-
         } catch (Exception e) {
             System.out.print(e.toString());
         }
@@ -72,21 +69,17 @@ public class GameWebSocket {
     @OnWebSocketMessage
     public void onMessage(@NotNull String data) {
         String[] splitted = data.split("_");
-        System.out.println("INCOMING MESSAGE");
-        System.out.println(data);
         gameMechanics.tapSquare(myName, Integer.valueOf(splitted[0]), Integer.valueOf(splitted[1]));
     }
 
     @OnWebSocketConnect
     public void onConnect(Session session) {
-        System.out.println("___CONNECTION OPENED___");
         setSession(session);
         webSocketService.addUser(this);
         gameMechanics.addUser(myName);
     }
 
     public void setMyScore(GameUser user, int row, int column) {
-        System.out.println(user.getMyName() + ": " + String.valueOf(user.getMyScore()));
         JSONObject jsonStart = new JSONObject();
         jsonStart.put("status", "increment");
         jsonStart.put("name", "me");
@@ -124,11 +117,6 @@ public class GameWebSocket {
 
     @OnWebSocketClose
     public void onClose(int statusCode, String reason) {
-        System.out.println("CONNECTION CLOSED");
-        try {
-            this.finalize();
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
+
     }
 }

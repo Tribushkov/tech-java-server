@@ -25,7 +25,7 @@ public class GameMechanicsImpl implements GameMechanics {
 
     private static final int STEP_TIME = 100;
 
-    private static final int gameTime = 60 * 1000;
+    private static final int gameTime = 10 * 1000;
 
     private Map<String, GameSession> nameToGame = new HashMap<>();
 
@@ -113,9 +113,8 @@ public class GameMechanicsImpl implements GameMechanics {
     private void gmStep() {
         for (GameSession session : allSessions) {
             if (session.getSessionTime() > gameTime) {
-                boolean firstWin = session.isFirstWin();
-                webSocketService.notifyGameOver(session.getFirst(), firstWin);
-                webSocketService.notifyGameOver(session.getSecond(), !firstWin);
+                webSocketService.notifyGameOver(session.getFirst(), session.isFirstWin());
+                webSocketService.notifyGameOver(session.getSecond(), !session.isFirstWin());
                 this.gameStatus = false;
                 nameToGame.remove(session.getFirst().getMyName());
                 nameToGame.remove(session.getSecond().getMyName());
@@ -138,9 +137,7 @@ public class GameMechanicsImpl implements GameMechanics {
         System.out.println(second);
         nameToGame.put(second, gameSession);
 
-        System.out.println("NOTIFY 1");
         webSocketService.notifyStartGame(gameSession.getSelf(first));
-        System.out.println("NOTIFY 2");
         webSocketService.notifyStartGame(gameSession.getSelf(second));
 
         clearSquares();
