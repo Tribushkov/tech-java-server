@@ -5,6 +5,7 @@ import base.WebSocketService;
 import frontend.*;
 import javax.servlet.Servlet;
 
+import mechanics.GMResources;
 import mechanics.GameMechanicsImpl;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.Handler;
@@ -12,7 +13,7 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.server.handler.ResourceHandler;
-import utils.ReadXMLSax;
+import utils.ResourceFactory;
 
 import java.net.InetSocketAddress;
 
@@ -21,7 +22,7 @@ public class Main {
         Server server;
         try {
 //            server = new Server(Integer.parseInt(args[0]));
-            Configuration configuration = (Configuration) ReadXMLSax.readXML("cfg/config.xml");
+            Configuration configuration = (Configuration) ResourceFactory.getInstance().getResourceObject("cfg/config.xml");
             InetSocketAddress address = new InetSocketAddress(configuration.getHost(), configuration.getPort());
             server = new Server(address);
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -32,6 +33,8 @@ public class Main {
 
         AccountService accountService = new AccountService();
         WebSocketService webSocketService = new WebSocketServiceImpl();
+
+        GMResources gmResources = (GMResources) ResourceFactory.getInstance().getResourceObject("data/game_data.xml");
         GameMechanics gameMechanics = new GameMechanicsImpl(webSocketService);
 
         Servlet signUp = new SignUpServlet(accountService);

@@ -1,6 +1,7 @@
 package utils;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 /**
  * Created by dmitri on 28.10.15.
@@ -24,7 +25,11 @@ public class ReflectionHelper {
             field.setAccessible(true);
 
             if (field.getType().equals(String.class)) {
-                field.set(object, value);
+                if (!fieldName.equals("colors")) {
+                    field.set(object, value);
+                } else {
+                    field.set(object, value);
+                }
             } else if (field.getType().equals(int.class)) {
                 field.set(object, Integer.decode(value));
             }

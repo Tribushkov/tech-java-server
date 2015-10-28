@@ -6,9 +6,17 @@ import javax.xml.parsers.SAXParserFactory;
 /**
  * Created by dmitri on 28.10.15.
  */
-public class ReadXMLSax {
+public class ResourceFactory {
 
-    public static Object readXML(String pathToFile) {
+    private static class ResourceFactoryHolder {
+        private final static ResourceFactory instance = new ResourceFactory();
+    }
+
+    public static ResourceFactory getInstance() {
+        return ResourceFactoryHolder.instance;
+    }
+
+    public Object getResourceObject(String pathToFile) {
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
