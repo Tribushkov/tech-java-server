@@ -12,13 +12,18 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.server.handler.ResourceHandler;
+import utils.ReadXMLSax;
+
+import java.net.InetSocketAddress;
 
 public class Main {
     public static void main(String[] args) {
         Server server;
         try {
 //            server = new Server(Integer.parseInt(args[0]));
-            server = new Server(8080);
+            Configuration configuration = (Configuration) ReadXMLSax.readXML("cfg/config.xml");
+            InetSocketAddress address = new InetSocketAddress(configuration.getHost(), configuration.getPort());
+            server = new Server(address);
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("You have to give a port number!"); return;
         } catch (NumberFormatException e) {
