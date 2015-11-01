@@ -45,7 +45,7 @@ public class GameWebSocket {
         }
     }
 
-    public void gameOver(GameUser user, boolean win) {
+    public void gameOver(GameUser user, int win) {
         try {
             JSONObject jsonStart = new JSONObject();
             jsonStart.put("status", "finish");

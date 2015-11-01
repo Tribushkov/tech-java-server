@@ -59,8 +59,16 @@ public class GameSession {
         return secondPlayer;
     }
 
-    public  boolean isFirstWin(){
-        return firstPlayer.getMyScore() > secondPlayer.getMyScore();
+    public  int whoIsWinner(){
+        if(firstPlayer.getMyScore() > secondPlayer.getMyScore()) {
+            return 1;
+        } else {
+            if(firstPlayer.getMyScore() < secondPlayer.getMyScore()) {
+                return 2;
+            } else {
+                return 0;
+            }
+        }
     }
 
 }

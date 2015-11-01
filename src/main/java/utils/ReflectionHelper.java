@@ -1,5 +1,7 @@
 package utils;
 
+import mechanics.GMResources;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
@@ -17,21 +19,26 @@ public class ReflectionHelper {
         return null;
     }
 
-    public static void setFieldValue(Object object,
-                                     String fieldName,
-                                     String value) {
+    public void setFieldValue(Object object,
+                              String fieldName,
+                              String value) {
         try {
             Field field = object.getClass().getDeclaredField(fieldName);
             field.setAccessible(true);
 
             if (field.getType().equals(String.class)) {
-                if (!fieldName.equals("colors")) {
-                    field.set(object, value);
+                field.set(object, value);
+                System.out.print(value);
+            } else {
+                if (field.getType().equals(int.class)) {
+                    field.set(object, Integer.decode(value));
                 } else {
-                    field.set(object, value);
+                    if (field.getType().equals(ArrayList.class)) {
+//                        boolean a = ((ArrayList<String>) field.get(this)).add(value);
+//                        field.set(object, value);
+                        ((GMResources) object).getColors().add(value);
+                    }
                 }
-            } else if (field.getType().equals(int.class)) {
-                field.set(object, Integer.decode(value));
             }
 
             field.setAccessible(false);

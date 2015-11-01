@@ -5,6 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class AccountServiceTest {
+
     @NotNull
     private final AccountService accountService = new AccountService();
     @NotNull

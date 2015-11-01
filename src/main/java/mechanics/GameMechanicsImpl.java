@@ -113,8 +113,8 @@ public class GameMechanicsImpl implements GameMechanics {
     private void gmStep() {
         for (GameSession session : allSessions) {
             if (session.getSessionTime() > gameTime) {
-                webSocketService.notifyGameOver(session.getFirst(), session.isFirstWin());
-                webSocketService.notifyGameOver(session.getSecond(), !session.isFirstWin());
+                webSocketService.notifyGameOver(session.getFirst(), session.whoIsWinner());
+                webSocketService.notifyGameOver(session.getSecond(), session.whoIsWinner());
                 this.gameStatus = false;
                 nameToGame.remove(session.getFirst().getMyName());
                 nameToGame.remove(session.getSecond().getMyName());

@@ -14,6 +14,7 @@ public class SaxHandler extends DefaultHandler {
     private static String CLASSNAME = "class";
     private String element = null;
     private Object object = null;
+    private ReflectionHelper reflectionHelper = new ReflectionHelper();
 
     public void startDocument() throws SAXException {
         System.out.println("Start document");
@@ -42,7 +43,7 @@ public class SaxHandler extends DefaultHandler {
         if(element != null) {
             String value = new String(ch, start, length);
             System.out.println(element + " = " + value);
-            ReflectionHelper.setFieldValue(object, element, value);
+            reflectionHelper.setFieldValue(object, element, value);
         }
     }
 
