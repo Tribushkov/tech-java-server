@@ -7,7 +7,9 @@ import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -25,16 +27,31 @@ public class SignInServletTest {
     MockHttpServletRequest req = new MockHttpServletRequest();
     MockHttpServletResponse resp = new MockHttpServletResponse();
 
-    private class UserData {
-        public String email;
-        public String login;
-        public String password;
+    private static class UserData {
+        private String email;
+        private String login;
+        private String password;
 
         UserData(String email, String login, String password) {
             this.email = email;
             this.login = login;
             this.password = password;
         }
+
+        public String getEmail() {
+            return email;
+        }
+
+
+        public String getLogin() {
+            return login;
+        }
+
+
+        public String getPassword() {
+            return password;
+        }
+
     }
 
     private void preparing() {
@@ -46,7 +63,7 @@ public class SignInServletTest {
     }
 
     @Test
-    public void testDoPost() throws Exception {
+    public void testDoPost() throws ServletException, IOException {
         preparing();
 
         Random rand = new Random();
@@ -55,13 +72,13 @@ public class SignInServletTest {
         switch (index) {
             case 0:
                 System.out.println("Valid user!");
-                accountService.addUser(users.get(index).email,
-                        new UserProfile(users.get(index).email, users.get(index).login, users.get(index).password));
+                accountService.addUser(users.get(index).getEmail(),
+                        new UserProfile(users.get(index).getEmail(), users.get(index).getLogin(), users.get(index).getPassword()));
             break;
             case 1:
                 System.out.println("User with wrong password!");
-                accountService.addUser(users.get(index).email,
-                        new UserProfile(users.get(index).email, users.get(index).login, "wrongPassword"));
+                accountService.addUser(users.get(index).getEmail(),
+                        new UserProfile(users.get(index).getEmail(), users.get(index).getLogin(), "wrongPassword"));
                 break;
             case 2:
                 System.out.println("Null user!");
@@ -70,8 +87,8 @@ public class SignInServletTest {
                 break;
         }
 
-        req.setParameter("email", users.get(index).email);
-        req.setParameter("password", users.get(index).password);
+        req.setParameter("email", users.get(index).getEmail());
+        req.setParameter("password", users.get(index).getPassword());
 
         SignInServlet signInServlet = new SignInServlet(accountService);
         signInServlet.doPost(req, resp);
@@ -85,6 +102,8 @@ public class SignInServletTest {
                 break;
             case 2:
                 assertEquals(HttpServletResponse.SC_FORBIDDEN, resp.getStatus());
+                break;
+            default:
                 break;
         }
     }

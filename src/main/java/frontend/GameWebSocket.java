@@ -45,11 +45,19 @@ public class GameWebSocket {
         }
     }
 
-    public void gameOver(GameUser user, int win) {
+    public void gameOver(GameUser user, String win) {
         try {
             JSONObject jsonStart = new JSONObject();
             jsonStart.put("status", "finish");
-            jsonStart.put("win", win);
+            if (win.equals(user.getMyName())) {
+                jsonStart.put("win", 1);
+            } else {
+                if (win.equals(user.getEnemyName())) {
+                    jsonStart.put("win", 2);
+                } else {
+                    jsonStart.put("win", 0);
+                }
+            }
             session.getRemote().sendString(jsonStart.toJSONString());
         } catch (Exception e) {
             System.out.print(e.toString());

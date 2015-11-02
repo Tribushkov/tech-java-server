@@ -13,7 +13,6 @@ public class Configuration implements Serializable {
 
     public Configuration() {
         this.host = "localhost:";
-
     }
 
     public Configuration(String host, int port) {

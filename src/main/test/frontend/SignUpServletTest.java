@@ -7,8 +7,10 @@ import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -26,11 +28,11 @@ public class SignUpServletTest {
     MockHttpServletRequest req = new MockHttpServletRequest();
     MockHttpServletResponse resp = new MockHttpServletResponse();
 
-    private class UserData {
-        public String email;
-        public String login;
-        public String password1;
-        public String password2;
+    private static class UserData {
+        private String email;
+        private String login;
+        private String password1;
+        private String password2;
 
         UserData(String email, String login, String password1, String password2) {
             this.email = email;
@@ -38,6 +40,26 @@ public class SignUpServletTest {
             this.password1 = password1;
             this.password2 = password2;
         }
+
+        public String getEmail() {
+            return email;
+        }
+
+
+        public String getLogin() {
+            return login;
+        }
+
+
+        public String getPassword1() {
+            return password1;
+        }
+
+        public String getPassword2() {
+            return password2;
+        }
+
+
     }
 
     private void preparing() {
@@ -56,21 +78,21 @@ public class SignUpServletTest {
     }
 
     @Test
-    public void testDoPost() throws Exception {
+    public void testDoPost() throws ServletException, IOException {
 
         preparing();
 
         Random rand = new Random();
         int index = rand.nextInt(3);
 
-        UserProfile user = new UserProfile(users.get(index).email, users.get(index).login, users.get(index).password1);
+        UserProfile user = new UserProfile(users.get(index).getEmail(), users.get(index).getLogin(), users.get(index).getPassword1());
 
         if (index == 2) {
             accountService.addUser(user.getEmail(), user);
         }
 
-        setRequestParams(users.get(index).email, users.get(index).login,
-                users.get(index).password1, users.get(index).password2);
+        setRequestParams(users.get(index).getEmail(), users.get(index).getLogin(),
+                users.get(index).getPassword1(), users.get(index).getPassword2());
         SignUpServlet signUpServlet = new SignUpServlet(accountService);
         signUpServlet.doPost(req, resp);
 

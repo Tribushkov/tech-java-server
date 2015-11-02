@@ -59,14 +59,14 @@ public class GameSession {
         return secondPlayer;
     }
 
-    public  int whoIsWinner(){
-        if(firstPlayer.getMyScore() > secondPlayer.getMyScore()) {
-            return 1;
+    public String whoIsWinner(GameUser user, GameUser enemy){
+        if(user.getMyScore() > enemy.getMyScore()) {
+            return user.getMyName();
         } else {
-            if(firstPlayer.getMyScore() < secondPlayer.getMyScore()) {
-                return 2;
+            if(user.getMyScore() < enemy.getMyScore()) {
+                return enemy.getMyName();
             } else {
-                return 0;
+                return "0";
             }
         }
     }
