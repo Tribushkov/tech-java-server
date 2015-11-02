@@ -36,6 +36,7 @@ public class AdminServlet extends HttpServlet {
         }
 
         resp.setContentType("application/json");
+        resp.addHeader("answer", json.toString());
         resp.getWriter().print(json.toString());
         resp.getWriter().flush();
     }

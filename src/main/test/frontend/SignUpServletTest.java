@@ -4,6 +4,8 @@ import main.AccountService;
 import main.UserProfile;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,6 +22,9 @@ public class SignUpServletTest {
     @NotNull
     private AccountService accountService = new AccountService();
     private ArrayList<UserData> users;
+
+    MockHttpServletRequest req = new MockHttpServletRequest();
+    MockHttpServletResponse resp = new MockHttpServletResponse();
 
     private class UserData {
         public String email;
@@ -43,6 +48,13 @@ public class SignUpServletTest {
         users.add(new UserData("email3", "alreadyExistingUser", "password", "password"));
     }
 
+    void setRequestParams(String email, String login, String password1, String password2) {
+        req.setParameter("email", email);
+        req.setParameter("login", login);
+        req.setParameter("password1", password1);
+        req.setParameter("password2", password2);
+    }
+
     @Test
     public void testDoPost() throws Exception {
 
@@ -57,18 +69,26 @@ public class SignUpServletTest {
             accountService.addUser(user.getEmail(), user);
         }
 
-        if (accountService.getUser(user.getEmail()) == null) {
-            if (!users.get(index).password1.equals(users.get(index).password2)) {
-                System.out.println("Unequal passwords!");
-                assertEquals(true, true);
-            } else {
+        setRequestParams(users.get(index).email, users.get(index).login,
+                users.get(index).password1, users.get(index).password2);
+        SignUpServlet signUpServlet = new SignUpServlet(accountService);
+        signUpServlet.doPost(req, resp);
+
+        switch (index) {
+            case 0:
+                assertEquals(HttpServletResponse.SC_OK, resp.getStatus());
                 System.out.println("Valid user!");
-                accountService.addUser(user.getEmail(), user);
-                assertEquals(user, accountService.getUser(user.getEmail()));
-            }
-        } else {
-            System.out.println("Already existing user!");
-            assertEquals(user.getEmail(), accountService.getUser(user.getEmail()).getEmail());
+                break;
+            case 1:
+                assertEquals(HttpServletResponse.SC_FORBIDDEN, resp.getStatus());
+                System.out.println("Unequal passwords!");
+                break;
+            case 2:
+                assertEquals(HttpServletResponse.SC_FORBIDDEN, resp.getStatus());
+                System.out.println("Already existing user!");
+                break;
+            default:
+                break;
         }
     }
 }

@@ -3,6 +3,8 @@ package frontend;
 import org.eclipse.jetty.server.Server;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,19 +22,16 @@ public class StopServerServletTest {
     @NotNull
     private Server server;
 
+    MockHttpServletRequest req = new MockHttpServletRequest();
+    MockHttpServletResponse resp = new MockHttpServletResponse();
 
     @Test
     public void testDoGet() throws ServletException, IOException {
-        long shutDownTime = time;
         server = new Server();
-        if (shutDownTime != 0) {
-            server.setStopTimeout(shutDownTime);
-            try {
-                server.stop();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+
+        req.setParameter("shutdown", "100");
+        StopServerServlet stopServerServlet = new StopServerServlet(server);
+        stopServerServlet.doGet(req, resp);
         assertFalse(server.isRunning());
     }
 

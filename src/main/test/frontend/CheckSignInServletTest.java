@@ -7,7 +7,9 @@ import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Random;
 
 import static org.junit.Assert.*;
@@ -37,11 +39,13 @@ public class CheckSignInServletTest {
                 break;
             case 1:
                 break;
+            default:
+                break;
         }
     }
 
     @Test
-    public void testDoPost() throws Exception {
+    public void testDoPost() throws ServletException, IOException {
         preparing();
 
         CheckSignInServlet checkSignInServlet = new CheckSignInServlet(accountService);
@@ -55,6 +59,8 @@ public class CheckSignInServletTest {
             case 1:
                 System.out.println("Response is NOT OK");
                 assertEquals(HttpServletResponse.SC_FORBIDDEN, resp.getStatus());
+                break;
+            default:
                 break;
         }
     }
