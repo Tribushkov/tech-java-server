@@ -14,7 +14,6 @@ public class SignInServlet extends HttpServlet {
     @NotNull
     private final AccountService accountService;
 
-
     public SignInServlet(@NotNull AccountService accountService) {
         this.accountService = accountService;
     }

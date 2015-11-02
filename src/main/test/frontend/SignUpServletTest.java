@@ -20,9 +20,6 @@ public class SignUpServletTest {
     @NotNull
     private AccountService accountService = new AccountService();
     private ArrayList<UserData> users;
-//    private UserProfile createUser(String email, String login, String password) {
-//        return User
-//    }
 
     private class UserData {
         public String email;
