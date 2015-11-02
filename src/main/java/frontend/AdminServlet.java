@@ -16,7 +16,6 @@ public class AdminServlet extends HttpServlet {
     @NotNull
     private final AccountService accountService;
 
-
     public AdminServlet(@NotNull AccountService accountService) {
         this.accountService = accountService;
     }
