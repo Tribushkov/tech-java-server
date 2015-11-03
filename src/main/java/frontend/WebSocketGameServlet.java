@@ -14,21 +14,22 @@ import javax.servlet.annotation.WebServlet;
 
 @WebServlet(name = "WebSocketGameServlet", urlPatterns = {"/game"})
 public class WebSocketGameServlet extends WebSocketServlet {
-    private final static int IDLE_TIME = 60 * 1000;
+    private static final int IDLE_TIME = 60 * 1000;
     private AccountService accountService;
     private GameMechanics gameMechanics;
     private WebSocketService webSocketService;
 
-    public WebSocketGameServlet(AccountService authService,
+    public WebSocketGameServlet(AccountService accountService,
                                 GameMechanics gameMechanics,
                                 WebSocketService webSocketService) {
-        this.accountService = authService;
+        this.accountService = accountService;
         this.gameMechanics = gameMechanics;
         this.webSocketService = webSocketService;
     }
 
     @Override
     public void configure(WebSocketServletFactory factory) {
+        System.out.println("WebSocketGameServlet.configure()");
         factory.getPolicy().setIdleTimeout(IDLE_TIME);
         factory.setCreator(new GameWebSocketCreator(accountService, gameMechanics, webSocketService));
     }

@@ -4,10 +4,7 @@ import base.GameMechanics;
 import base.GameUser;
 import base.WebSocketService;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import utils.TimeHelper;
 
@@ -15,29 +12,36 @@ import utils.TimeHelper;
 /**
  * Created by dmitri on 23.10.15.
  */
+
 public class GameMechanicsImpl implements GameMechanics {
 
     private String anticipant;
 
-    private static int size = 6;
+    private int size;
 
-    private String squares[][] = new String[size][size];
+    private int stepTime;
 
-    private static final int STEP_TIME = 100;
+    private long gameTime;
 
-    private static final int gameTime = 60 * 1000;
+    private ArrayList<String> colors;
+
+    private String[][] squares;
 
     private Map<String, GameSession> nameToGame = new HashMap<>();
 
     private Set<GameSession> allSessions = new HashSet<>();
 
-    private boolean gameStatus = true;
-
     private WebSocketService webSocketService;
 
-    public GameMechanicsImpl(WebSocketService webSocketService) {
+
+    public GameMechanicsImpl(WebSocketService webSocketService, GMResources gameResources) {
         clearSquares();
+        this.size = gameResources.getFieldSize();
+        this.stepTime = gameResources.getTimeStamp();
+        this.gameTime = gameResources.getGameTime() * 1000;
+        this.colors = gameResources.getColors();
         this.webSocketService = webSocketService;
+        this.squares = new String[size][size];
     }
 
     private void clearSquares() {
@@ -68,9 +72,6 @@ public class GameMechanicsImpl implements GameMechanics {
 
     }
 
-    private String getStateOfSquare(int row, int column) {
-        return squares[row][column];
-    }
 
     private int getIncrementScore(String userName, int row, int column) {
 
@@ -78,7 +79,7 @@ public class GameMechanicsImpl implements GameMechanics {
 
         int incrementor = 0;
 
-        if (squares[row][column].equals("")) {
+        if (squares[row][column].isEmpty()) {
             incrementor = 1;
         } else if (squares[row][column].equals(enemyName)) {
             incrementor = 2;
@@ -102,11 +103,12 @@ public class GameMechanicsImpl implements GameMechanics {
         webSocketService.notifyEnemyNewScore(enemyUser, row, column);
     }
 
+    @SuppressWarnings("InfiniteLoopStatement")
     @Override
     public void run() {
         while (true) {
             gmStep();
-            TimeHelper.sleep(STEP_TIME);
+            TimeHelper.sleep(stepTime);
         }
     }
 
@@ -117,7 +119,6 @@ public class GameMechanicsImpl implements GameMechanics {
                         session.whoIsWinner(session.getFirst(), session.getSecond()));
                 webSocketService.notifyGameOver(session.getSecond(),
                         session.whoIsWinner(session.getSecond(), session.getFirst()));
-                this.gameStatus = false;
                 nameToGame.remove(session.getFirst().getMyName());
                 nameToGame.remove(session.getSecond().getMyName());
                 allSessions.remove(session);
@@ -131,18 +132,25 @@ public class GameMechanicsImpl implements GameMechanics {
 
     private void startGame(String first) {
 
+        clearSquares();
+
         String second = anticipant;
         GameSession gameSession = new GameSession(first, second);
+
+        Random random = new Random();
+        int colorNum = random.nextInt(6);
+        gameSession.getFirst().setMyColor(colors.get(colorNum));
+        gameSession.getSecond().setEnemyColor(colors.get(colorNum));
+        gameSession.getSecond().setMyColor(colors.get(colorNum + 1));
+        gameSession.getFirst().setEnemyColor(colors.get(colorNum + 1));
+
         allSessions.add(gameSession);
-        System.out.println(first);
         nameToGame.put(first, gameSession);
-        System.out.println(second);
         nameToGame.put(second, gameSession);
 
         webSocketService.notifyStartGame(gameSession.getSelf(first));
         webSocketService.notifyStartGame(gameSession.getSelf(second));
 
-        clearSquares();
 
     }
 }

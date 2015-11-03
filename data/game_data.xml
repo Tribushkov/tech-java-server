@@ -1,6 +1,5 @@
 <class type='mechanics.GMResources'>
     <colors>#D32F2F</colors>
-    <colors>#D32F2F</colors>
     <colors>#FF4081</colors>
     <colors>#FFA000</colors>
     <colors>#512DA8</colors>
@@ -9,7 +8,7 @@
     <colors>#8BC34A</colors>
     <colors>#455A64</colors>
 
-    <gameTime>20</gameTime>
+    <gameTime>60</gameTime>
 
     <timeStamp>100</timeStamp>
 

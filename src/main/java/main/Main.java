@@ -35,7 +35,9 @@ public class Main {
         WebSocketService webSocketService = new WebSocketServiceImpl();
 
         GMResources gmResources = (GMResources) ResourceFactory.getInstance().getResourceObject("data/game_data.xml");
-        GameMechanics gameMechanics = new GameMechanicsImpl(webSocketService);
+        gmResources.getColors().remove(0);
+        gmResources.getColors().remove(0);
+        GameMechanics gameMechanics = new GameMechanicsImpl(webSocketService, gmResources);
 
         Servlet signUp = new SignUpServlet(accountService);
         Servlet signIn = new SignInServlet(accountService);

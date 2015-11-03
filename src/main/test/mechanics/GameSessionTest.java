@@ -38,6 +38,15 @@ public class GameSessionTest {
 
     @Test
     public void testWhoIsWinner() throws Exception {
+        gameSession.getFirst().incrementMyScore(2);
+        gameSession.getSecond().incrementMyScore(1);
+        assertEquals(name1, gameSession.whoIsWinner(gameSession.getFirst(), gameSession.getSecond()));
+
+        gameSession.getSecond().incrementMyScore(2);
+        assertEquals(name2, gameSession.whoIsWinner(gameSession.getFirst(), gameSession.getSecond()));
+
+        gameSession.getFirst().incrementMyScore(1);
+        assertEquals("0", gameSession.whoIsWinner(gameSession.getFirst(), gameSession.getSecond()));
 
     }
 }

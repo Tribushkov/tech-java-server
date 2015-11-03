@@ -1,14 +1,10 @@
 package base;
 
-import java.util.Random;
 
 /**
  * Created by dmitri on 23.10.15.
  */
 public class GameUser {
-
-    private String[] colors = { "#D32F2F", "#D32F2F", "#FFA000", "#FF4081",
-            "#512DA8", "#E040FB", "#388E3C", "#8BC34A", "#455A64" };
 
 
     private final String myName;
@@ -20,11 +16,6 @@ public class GameUser {
 
     public GameUser(String myName) {
         this.myName = myName;
-
-        Random rand = new Random();
-        int randomNum = rand.nextInt(8);
-        this.myColor = colors[randomNum];
-
     }
 
     public int getMyScore() {
@@ -57,6 +48,10 @@ public class GameUser {
 
     public void setEnemyColor(String color) {
         this.enemyColor = color;
+    }
+
+    public void setMyColor(String color) {
+        this.myColor = color;
     }
 
     public void incrementMyScore(int incrementor) {
