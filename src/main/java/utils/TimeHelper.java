@@ -5,6 +5,9 @@ package utils;
  */
 
 public class TimeHelper {
+
+    public static final int MILLIS = 5000;
+
     public static void sleep(int period){
         try{
             Thread.sleep(period);
@@ -13,9 +16,10 @@ public class TimeHelper {
         }
     }
 
+    @SuppressWarnings("unused")
     public static void sleep(){
         try{
-            Thread.sleep(5000);
+            Thread.sleep(MILLIS);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -42,6 +42,6 @@ public class WebSocketServiceImpl implements WebSocketService {
 
     @Override
     public void notifyTime(GameUser user, long time) {
-        userSockets.get(user.getMyName()).sendTime(user, time);
+        userSockets.get(user.getMyName()).sendTime(time);
     }
 }

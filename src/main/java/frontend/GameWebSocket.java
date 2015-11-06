@@ -11,10 +11,13 @@ import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONObject;
 
+import java.io.IOException;
+
 /**
  * Created by dmitri on 23.10.15.
  */
 
+@SuppressWarnings("unchecked")
 @WebSocket
 public class GameWebSocket {
     private String myName;
@@ -22,7 +25,7 @@ public class GameWebSocket {
     @NotNull private GameMechanics gameMechanics;
     private WebSocketService webSocketService;
 
-    public GameWebSocket(String myName, GameMechanics gameMechanics, WebSocketService webSocketService) {
+    public GameWebSocket(String myName, @NotNull GameMechanics gameMechanics, WebSocketService webSocketService) {
         this.myName = myName;
         this.gameMechanics = gameMechanics;
         this.webSocketService = webSocketService;
@@ -38,7 +41,9 @@ public class GameWebSocket {
             jsonStart.put("status", "start");
             jsonStart.put("enemyName", user.getEnemyName());
             session.getRemote().sendString(jsonStart.toJSONString());
-        } catch (Exception e) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (RuntimeException e) {
             System.out.print(e.toString());
         }
     }
@@ -57,30 +62,38 @@ public class GameWebSocket {
                 }
             }
             session.getRemote().sendString(jsonStart.toJSONString());
-        } catch (Exception e) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (RuntimeException e) {
             System.out.print(e.toString());
         }
     }
 
-    public void sendTime(GameUser user, long time) {
+    public void sendTime(long time) {
         try {
             JSONObject jsonStart = new JSONObject();
             jsonStart.put("time", String.valueOf(time));
             session.getRemote().sendString(jsonStart.toJSONString());
-        } catch (Exception e) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (RuntimeException e) {
             System.out.print(e.toString());
         }
     }
 
     @OnWebSocketMessage
     public void onMessage(@NotNull String data) {
-        String[] splitted = data.split("_");
+
+        String regex = "_";
+
+        String[] splitted = data.split(regex);
         gameMechanics.tapSquare(myName, Integer.valueOf(splitted[0]), Integer.valueOf(splitted[1]));
     }
 
+    @SuppressWarnings("ParameterHidesMemberVariable")
     @OnWebSocketConnect
     public void onConnect(Session session) {
-        setSession(session);
+        this.session = session;
         webSocketService.addUser(this);
         gameMechanics.addUser(myName);
     }
@@ -94,7 +107,9 @@ public class GameWebSocket {
         jsonStart.put("color", user.getMyColor());
         try {
             session.getRemote().sendString(jsonStart.toJSONString());
-        } catch (Exception e) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (RuntimeException e) {
             System.out.print(e.toString());
         }
     }
@@ -108,7 +123,9 @@ public class GameWebSocket {
         jsonStart.put("color", user.getEnemyColor());
         try {
             session.getRemote().sendString(jsonStart.toJSONString());
-        } catch (Exception e) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (RuntimeException e) {
             System.out.print(e.toString());
         }
     }

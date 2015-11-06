@@ -2,7 +2,6 @@ package frontend;
 
 import base.GameMechanics;
 import main.AccountService;
-import main.UserProfile;
 import org.jetbrains.annotations.NotNull;
 
 import javax.servlet.ServletException;
@@ -10,8 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by dmitri on 24.10.15.
@@ -46,7 +43,7 @@ public class GameServlet extends HttpServlet {
                 response.addHeader("EMAIL", name);
                 response.setStatus(HttpServletResponse.SC_OK);
             }
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             e.printStackTrace();
         }
 

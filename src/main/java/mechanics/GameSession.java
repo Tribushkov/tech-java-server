@@ -1,6 +1,5 @@
 package mechanics;
 
-import base.GameMechanics;
 import base.GameUser;
 
 import java.util.Date;

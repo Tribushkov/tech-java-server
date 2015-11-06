@@ -14,6 +14,7 @@ public class GMResources implements Serializable {
     private int timeStamp;
     private int fieldSize;
 
+    @SuppressWarnings({"unused", "MagicNumber"})
     public GMResources() {
         this.colors = new ArrayList<>();
         colors.add("#FFA000");

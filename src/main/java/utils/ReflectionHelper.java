@@ -34,15 +34,14 @@ public class ReflectionHelper {
                     field.set(object, Integer.decode(value));
                 } else {
                     if (field.getType().equals(ArrayList.class)) {
-//                        boolean a = ((ArrayList<String>) field.get(this)).add(value);
-//                        field.set(object, value);
                         ((GMResources) object).getColors().add(value);
                     }
                 }
             }
 
             field.setAccessible(false);
-        } catch (SecurityException | NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
+
+        } catch (NumberFormatException | SecurityException | NoSuchFieldException |  IllegalAccessException e) {
             e.printStackTrace();
         }
     }

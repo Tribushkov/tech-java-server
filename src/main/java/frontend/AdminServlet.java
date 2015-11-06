@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@SuppressWarnings("resource")
 public class AdminServlet extends HttpServlet {
 
     @NotNull

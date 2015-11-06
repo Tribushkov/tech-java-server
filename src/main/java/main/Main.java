@@ -73,8 +73,6 @@ public class Main {
             server.start();
 //            server.join();
             gameMechanics.run();
-        } catch (InterruptedException e) {
-            System.out.println("Server failed");
         } catch (Exception e) {
             System.out.println("Server failed");
         }
