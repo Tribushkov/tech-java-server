@@ -33,7 +33,7 @@ public class GameMechanicsImplTest {
     @Test
     public void testAddUser() throws Exception {
         gameMechanics.addUser("user1");
-        gameMechanics.addUser("user2");
+//        gameMechanics.addUser("user2");
     }
 
     @Test

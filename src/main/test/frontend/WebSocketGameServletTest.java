@@ -46,6 +46,6 @@ public class WebSocketGameServletTest {
 
     @Test
     public void testConfigure() throws Exception {
-        webSocketGameServlet.
+//        webSocketGameServlet.
     }
 }

@@ -26,7 +26,6 @@ public class GameWebSocket {
         this.myName = myName;
         this.gameMechanics = gameMechanics;
         this.webSocketService = webSocketService;
-        System.out.println(webSocketService.toString());
     }
 
     public String getMyName() {
@@ -38,7 +37,6 @@ public class GameWebSocket {
             JSONObject jsonStart = new JSONObject();
             jsonStart.put("status", "start");
             jsonStart.put("enemyName", user.getEnemyName());
-            System.out.println(jsonStart.toJSONString());
             session.getRemote().sendString(jsonStart.toJSONString());
         } catch (Exception e) {
             System.out.print(e.toString());
