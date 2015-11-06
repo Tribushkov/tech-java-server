@@ -52,6 +52,10 @@ public class GameMechanicsImpl implements GameMechanics {
         }
     }
 
+    public String[][] getSquares() {
+        return squares;
+    }
+
     @Override
     public void addUser(String user) {
         System.out.println(user);
