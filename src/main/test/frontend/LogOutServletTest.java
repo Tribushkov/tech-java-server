@@ -26,35 +26,31 @@ public class LogOutServletTest {
     MockHttpSession session = new MockHttpSession();
 
     @Test
-    public void testDoPost() throws Exception {
-        Random rand = new Random();
-        int index = rand.nextInt(2);
+    public void testDoPostOk() throws Exception {
 
-        UserProfile user;
-        switch (index) {
-            case 0:
-                req.setSession(session);
-                user = new UserProfile("email", "login", "password");
-                accountService.addSession(session.getId(), user);
-                break;
-            case 1:
-                req.setSession(session);
-                break;
-        }
+        req.setSession(session);
+        UserProfile user = new UserProfile("email", "login", "password");
+        accountService.addSession(session.getId(), user);
 
 
         LogOutServlet logOutServlet = new LogOutServlet(accountService);
         logOutServlet.doPost(req, resp);
 
-        switch (index) {
-            case 0:
-                System.out.println("Session deleted");
-                assertEquals(HttpServletResponse.SC_OK, resp.getStatus());
-                break;
-            case 1:
-                System.out.println("Session doesn't exists");
-                assertEquals(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, resp.getStatus());
-                break;
-        }
+
+        System.out.println("Session deleted");
+        assertEquals(HttpServletResponse.SC_OK, resp.getStatus());
+    }
+
+    @Test
+    public void testDoPostError() throws Exception {
+        req.setSession(session);
+
+        LogOutServlet logOutServlet = new LogOutServlet(accountService);
+        logOutServlet.doPost(req, resp);
+
+
+        System.out.println("Session doesn't exists");
+        assertEquals(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, resp.getStatus());
+
     }
 }

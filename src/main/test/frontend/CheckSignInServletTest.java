@@ -25,43 +25,28 @@ public class CheckSignInServletTest {
     MockHttpServletRequest req = new MockHttpServletRequest();
     MockHttpServletResponse resp = new MockHttpServletResponse();
 
-    int index;
-
-    void preparing() {
-        Random rand = new Random();
-        index = rand.nextInt(2);
-
-        switch (index) {
-            case 0:
-                UserProfile user = new UserProfile("email", "login", "password");
-                req.getSession(true);
-                accountService.addSession(req.getSession().getId(), user);
-                break;
-            case 1:
-                break;
-            default:
-                break;
-        }
-    }
-
     @Test
-    public void testDoPost() throws ServletException, IOException {
-        preparing();
+    public void testDoPostOk() throws ServletException, IOException {
+
+        UserProfile user = new UserProfile("email", "login", "password");
+        req.getSession(true);
+        accountService.addSession(req.getSession().getId(), user);
 
         CheckSignInServlet checkSignInServlet = new CheckSignInServlet(accountService);
 
         checkSignInServlet.doPost(req, resp);
-        switch (index) {
-            case 0:
-                System.out.println("Response is OK");
-                assertEquals(HttpServletResponse.SC_OK, resp.getStatus());
-                break;
-            case 1:
-                System.out.println("Response is NOT OK");
-                assertEquals(HttpServletResponse.SC_FORBIDDEN, resp.getStatus());
-                break;
-            default:
-                break;
-        }
+        System.out.println("Response is OK");
+        assertEquals(HttpServletResponse.SC_OK, resp.getStatus());
+    }
+
+    @Test
+    public void testDoPostForbidden() throws ServletException, IOException {
+
+        CheckSignInServlet checkSignInServlet = new CheckSignInServlet(accountService);
+
+        checkSignInServlet.doPost(req, resp);
+        System.out.println("Response is NOT OK");
+        assertEquals(HttpServletResponse.SC_FORBIDDEN, resp.getStatus());
+
     }
 }
