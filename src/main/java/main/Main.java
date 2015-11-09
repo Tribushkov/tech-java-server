@@ -22,7 +22,7 @@ public class Main {
         Server server;
         try {
 //            server = new Server(Integer.parseInt(args[0]));
-            Configuration configuration = (Configuration) ResourceFactory.getInstance().getResourceObject("cfg/config.xml");
+            Configuration configuration = (Configuration) ResourceFactory.getInstance().getResourceObject("cfg/config.properties");
             InetSocketAddress address = new InetSocketAddress(configuration.getHost(), configuration.getPort());
             server = new Server(address);
         } catch (ArrayIndexOutOfBoundsException e) {
