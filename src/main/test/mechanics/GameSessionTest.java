@@ -1,6 +1,5 @@
 package mechanics;
 
-import base.GameUser;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
 
 /**
  * Created by dmitri on 02.11.15.
@@ -25,7 +24,7 @@ public class GameMechanicsImplTest {
         colors.add("#D32F2F");
         colors.add("#FF4081");
 
-        GMResources gameResources = new GMResources(colors, 10000, 100, 6);
+        GMResources gameResources = new GMResources(colors, 1000, 100, 6);
 
         gameMechanics = new GameMechanicsImpl(webSocketService, gameResources);
     }

@@ -12,10 +12,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.mock.web.MockHttpSession;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -45,7 +43,7 @@ public class GameWebSocketCreatorTest {
     }
 
     @Test
-    public void testCreateWebSocket() throws Exception {
+    public void testCreateWebSocket() throws URISyntaxException {
 
         MockHttpServletRequest req = new MockHttpServletRequest();
         accountService.addSession(req.getSession(true).getId(),new UserProfile("email", "login", "password"));

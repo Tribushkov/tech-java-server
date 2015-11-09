@@ -9,8 +9,8 @@ import static org.junit.Assert.*;
  */
 public class ConfigurationTest {
 
-    public static final int port = 8080;
-    private Configuration configuration = new Configuration("localhost", port);
+    public static final int PORT = 8080;
+    private Configuration configuration = new Configuration("localhost", PORT);
 
     @Test
     public void testGetHost() throws Exception {
@@ -19,6 +19,6 @@ public class ConfigurationTest {
 
     @Test
     public void testGetPort() throws Exception {
-        assertEquals(port, configuration.getPort());
+        assertEquals(PORT, configuration.getPort());
     }
 }

@@ -8,8 +8,10 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpSession;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Random;
+
+import java.io.IOException;
 
 import static org.junit.Assert.*;
 
@@ -26,7 +28,7 @@ public class LogOutServletTest {
     MockHttpSession session = new MockHttpSession();
 
     @Test
-    public void testDoPostOk() throws Exception {
+    public void testDoPostOk() throws ServletException, IOException {
 
         req.setSession(session);
         UserProfile user = new UserProfile("email", "login", "password");
@@ -42,7 +44,7 @@ public class LogOutServletTest {
     }
 
     @Test
-    public void testDoPostError() throws Exception {
+    public void testDoPostError() throws ServletException, IOException {
         req.setSession(session);
 
         LogOutServlet logOutServlet = new LogOutServlet(accountService);
