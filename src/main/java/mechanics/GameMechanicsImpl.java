@@ -130,6 +130,7 @@ public class GameMechanicsImpl implements GameMechanics {
             } else {
                 webSocketService.notifyTime(session.getFirst(), session.getSessionTime());
                 webSocketService.notifyTime(session.getSecond(), session.getSessionTime());
+                System.out.println("Time: " + String.valueOf(session.getSessionTime()));
             }
         }
     }
@@ -155,6 +156,9 @@ public class GameMechanicsImpl implements GameMechanics {
         webSocketService.notifyStartGame(gameSession.getSelf(first));
         webSocketService.notifyStartGame(gameSession.getSelf(second));
 
+    }
 
+    public GameSession getGameSession(String playerName) {
+        return nameToGame.get(playerName);
     }
 }
