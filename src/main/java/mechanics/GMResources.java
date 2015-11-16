@@ -14,16 +14,6 @@ public class GMResources implements Serializable {
     private int timeStamp;
     private int fieldSize;
 
-    @SuppressWarnings({"unused", "MagicNumber"})
-    public GMResources() {
-        this.colors = new ArrayList<>();
-        colors.add("#FFA000");
-        colors.add("#D32F2F");
-        this.gameTime = 20;
-        this.timeStamp = 100;
-        this.fieldSize = 6;
-    }
-
     public GMResources(ArrayList<String> colors, int gameTime, int timeStamp, int fieldSize) {
         this.colors = colors;
         this.gameTime = gameTime;

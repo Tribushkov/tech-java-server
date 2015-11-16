@@ -28,6 +28,7 @@ public class GameServlet extends HttpServlet {
     }
 
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void doPost(@NotNull HttpServletRequest request,
                        @NotNull HttpServletResponse response) throws ServletException, IOException {

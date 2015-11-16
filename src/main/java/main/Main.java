@@ -23,7 +23,11 @@ public class Main {
         try {
 //            server = new Server(Integer.parseInt(args[0]));
             Configuration configuration = (Configuration) ResourceFactory.getInstance().getResourceObject("cfg/config.properties");
-            InetSocketAddress address = new InetSocketAddress(configuration.getHost(), configuration.getPort());
+            InetSocketAddress address = null;
+            if (configuration != null) {
+                address = new InetSocketAddress(configuration.getHost(), configuration.getPort());
+            }
+            assert address != null;
             server = new Server(address);
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("You have to give a port number!"); return;
@@ -35,6 +39,7 @@ public class Main {
         WebSocketService webSocketService = new WebSocketServiceImpl();
 
         GMResources gmResources = (GMResources) ResourceFactory.getInstance().getResourceObject("data/game_data.xml");
+        assert gmResources != null;
         gmResources.getColors().remove(0);
         gmResources.getColors().remove(0);
         GameMechanics gameMechanics = new GameMechanicsImpl(webSocketService, gmResources);

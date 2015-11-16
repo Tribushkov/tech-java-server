@@ -1,5 +1,6 @@
 package utils;
 
+import org.jetbrains.annotations.Nullable;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -20,6 +21,7 @@ public class ResourceFactory {
         return ResourceFactoryHolder.INSTANCE;
     }
 
+    @Nullable
     public Object getResourceObject(String pathToFile) {
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();

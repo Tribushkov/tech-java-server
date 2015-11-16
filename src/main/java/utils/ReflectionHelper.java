@@ -1,6 +1,7 @@
 package utils;
 
 import mechanics.GMResources;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
  */
 
 public class ReflectionHelper {
+    @Nullable
     public static Object createInstance(String className) {
         try {
             return Class.forName(className).newInstance();

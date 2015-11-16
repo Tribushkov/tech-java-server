@@ -27,8 +27,8 @@ public class SaxHandler extends DefaultHandler {
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        String CLASSNAME = "class";
-        if(!qName.equals(CLASSNAME)){
+        String classname = "class";
+        if(!qName.equals(classname)){
             element = qName;
         }
         else{

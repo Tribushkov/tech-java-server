@@ -23,10 +23,14 @@ public class GameWebSocketCreator implements WebSocketCreator {
         this.webSocketService = webSocketService;
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public Object createWebSocket(ServletUpgradeRequest req, ServletUpgradeResponse resp) {
         String sessionId = req.getHttpServletRequest().getSession().getId();
-        String name = accountService.getSession(sessionId).getEmail();
+        String name = "";
+        if (accountService.getSession(sessionId) != null) {
+            name = accountService.getSession(sessionId).getEmail();
+        }
         return new GameWebSocket(name, gameMechanics, webSocketService);
     }
 }
