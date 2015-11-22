@@ -14,25 +14,30 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import utils.ResourceFactory;
+import utils.ServerCfgHelper;
 
+import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) {
-        Server server;
+        Server server = null;
         try {
 //            server = new Server(Integer.parseInt(args[0]));
-            Configuration configuration = (Configuration) ResourceFactory.getInstance().getResourceObject("cfg/config.properties");
-            InetSocketAddress address = null;
-            if (configuration != null) {
-                address = new InetSocketAddress(configuration.getHost(), configuration.getPort());
-            }
-            assert address != null;
+            ServerCfgHelper properties = new ServerCfgHelper();
+            HashMap<String, String> pr = properties.getPropValues();
+
+            Configuration configuration = new Configuration(pr.get("host"), Integer.valueOf(pr.get("port")));
+
+            InetSocketAddress address = new InetSocketAddress(configuration.getHost(), configuration.getPort());
             server = new Server(address);
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("You have to give a port number!"); return;
         } catch (NumberFormatException e) {
             System.out.println("The port number is a number!"); return;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         AccountService accountService = new AccountService();
@@ -49,6 +54,7 @@ public class Main {
         Servlet logOut = new LogOutServlet(accountService);
         Servlet admin  = new AdminServlet(accountService);
         Servlet check  = new CheckSignInServlet(accountService);
+        assert server != null;
         Servlet stop   = new StopServerServlet(server);
 
         ServletContextHandler contextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
