@@ -9,6 +9,8 @@ import org.jetbrains.annotations.NotNull;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import base.dataSets.UserDataSet;
+
 public class SignInServlet extends HttpServlet {
 
     @NotNull
@@ -23,7 +25,7 @@ public class SignInServlet extends HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
-        UserProfile user = accountService.getUser(email);
+        UserDataSet user = accountService.getUser(email);
 
         if (user != null) {
             if (user.getPassword().equals(password)) {

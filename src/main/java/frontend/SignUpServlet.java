@@ -1,5 +1,6 @@
 package frontend;
 
+import base.dataSets.UserDataSet;
 import main.UserProfile;
 import main.AccountService;
 import java.io.IOException;
@@ -31,7 +32,7 @@ public class SignUpServlet extends HttpServlet {
                 resp.setHeader("Error", "1");
                 resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
             } else {
-                accountService.addUser(email, new UserProfile(email, login, password1));
+                accountService.addUser(email, new UserDataSet(email, login, password1));
                 resp.setStatus(HttpServletResponse.SC_OK);
             }
         } else {

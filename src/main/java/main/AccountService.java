@@ -3,34 +3,43 @@ package main;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import base.DBService;
+import base.dataSets.UserDataSet;
+import dbService.DBServiceImpl;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class AccountService {
 
-    @NotNull
-    private final Map<String, UserProfile> users = new HashMap<>();
+    DBService dbService = new DBServiceImpl();
 
     @NotNull
-    private final Map<String, UserProfile> sessions = new HashMap<>();
+    private final Map<String, UserDataSet> users = new HashMap<>();
+
+    @NotNull
+    private final Map<String, UserDataSet> sessions = new HashMap<>();
 
 
-    public void addUser(@Nullable String name, UserProfile profile) {
+    public void addUser(@Nullable String name, UserDataSet profile) {
+        /*
         if (!users.containsKey(name))
             users.put(name, profile);
+        */
+        dbService.save(profile);
     }
 
-    public void addSession(@Nullable String id, @Nullable UserProfile user) {
+    public void addSession(@Nullable String id, UserDataSet user) {
         sessions.put(id, user);
     }
 
     @Nullable
-    public UserProfile getUser(@Nullable String name) {
-        return users.get(name);
+    public UserDataSet getUser(String email) {
+        return dbService.readByName(email);
     }
 
     @Nullable
-    public UserProfile getSession(@Nullable String id) {
+    public UserDataSet getSession(@Nullable String id) {
         return sessions.get(id);
     }
 
@@ -43,12 +52,12 @@ public class AccountService {
     }
 
     @NotNull
-    public Map<String, UserProfile> getUsers() {
+    public Map<String, UserDataSet> getUsers() {
         return users;
     }
 
     @NotNull
-    public Map<String, UserProfile> getSessions() {
+    public Map<String, UserDataSet> getSessions() {
         return sessions;
     }
 

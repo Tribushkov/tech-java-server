@@ -1,7 +1,10 @@
 package main;
 
+import base.DBService;
 import base.GameMechanics;
 import base.WebSocketService;
+import base.dataSets.UserDataSet;
+import dbService.DBServiceImpl;
 import frontend.*;
 import javax.servlet.Servlet;
 
@@ -19,9 +22,33 @@ import utils.ServerCfgHelper;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+
+        /*
+        DBService dbService = new DBServiceImpl();
+
+        String status = dbService.getLocalStatus();
+        System.out.println("Status: " + status);
+
+        dbService.save(new UserDataSet("tully","tully","tully"));
+
+        UserDataSet dataSet = dbService.read(1);
+        System.out.println(dataSet);
+
+        dataSet = dbService.readByName("sully");
+        System.out.println(dataSet);
+
+        List<UserDataSet> dataSets = dbService.readAll();
+        for (UserDataSet userDataSet : dataSets) {
+            System.out.println(userDataSet);
+        }
+
+        dbService.shutdown();
+        */
+
         Server server = null;
         try {
 //            server = new Server(Integer.parseInt(args[0]));
@@ -87,5 +114,6 @@ public class Main {
         } catch (Exception e) {
             System.out.println("Server failed");
         }
+
     }
 }

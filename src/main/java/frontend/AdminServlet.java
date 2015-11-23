@@ -1,6 +1,8 @@
 package frontend;
 
 import java.util.Map;
+
+import base.dataSets.UserDataSet;
 import main.UserProfile;
 import main.AccountService;
 import org.json.JSONObject;
@@ -22,16 +24,16 @@ public class AdminServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map<String, UserProfile> users = accountService.getUsers();
-        Map<String, UserProfile> sessions = accountService.getSessions();
+        Map<String, UserDataSet> users = accountService.getUsers();
+        Map<String, UserDataSet> sessions = accountService.getSessions();
 
         JSONObject json = new JSONObject();
 
-        for (Map.Entry<String, UserProfile> entry : users.entrySet()) {
+        for (Map.Entry<String, UserDataSet> entry : users.entrySet()) {
             json.accumulate("users", entry.getKey());
         }
 
-        for (Map.Entry<String, UserProfile> entry : sessions.entrySet()) {
+        for (Map.Entry<String, UserDataSet> entry : sessions.entrySet()) {
             json.accumulate("sessions", entry.getValue().getEmail());
         }
 
